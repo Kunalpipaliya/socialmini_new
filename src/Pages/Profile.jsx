@@ -6,7 +6,7 @@ const Profile = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const [posts, setposts] = useState([])
   const fetchPost = () => {
-    axios.get("https://generateapi.techsnack.online/api/post", {
+    axios.get(" https://generateapi.techsnack.online/api/postImg", {
       headers: {
         Authorization: token
       }
@@ -55,7 +55,7 @@ const Profile = () => {
             
             return (
               <div className='container' key={index}>
-                <div className="w-75 m-auto shadow-sm rounded-4 bg-white p-3 border border-1">
+                <div className=" w-50 m-auto shadow-sm rounded-4 bg-white p-3 border border-1">
                   <div className="d-flex gap-2 align-items-center">
                     <span style={{ width: "40px", height: "40px" }} className='bg-dark rounded-circle text-white d-flex justify-content-center align-items-center fw-bold'>{item.postedBy.at(0).toUpperCase()}</span>
                     <span className='d-flex flex-column'>
@@ -64,7 +64,8 @@ const Profile = () => {
                     </span>
                   </div>
                   <hr />
-                  <div>{item.post}</div>
+                  <div><img src={item.post} alt={item.post} width={"100%"}/></div>
+                <strong>{item.postedBy}</strong><span className="text-muted">   {item.caption}</span>
                   <hr />
                   <div className="d-flex gap-3">
 

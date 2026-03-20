@@ -11,7 +11,7 @@ const Home = () => {
 
   const [comments, setComments] = useState([])
   const fetchPost = () => {
-    axios.get("https://generateapi.techsnack.online/api/post", {
+    axios.get(" https://generateapi.techsnack.online/api/postImg", {
       headers: {
         Authorization: token
       }
@@ -62,7 +62,7 @@ const Home = () => {
           const filteredComments = comments.filter((c) => c.postid === item._id)
           return (
             <div className='container' key={index}>
-              <div className="w-75 m-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3">
+              <div className="w-50 m-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3">
                 <div className="d-flex gap-2 align-items-center">
                   <span style={{ width: "40px", height: "40px" }} className='bg-dark border border-1 rounded-circle text-white d-flex justify-content-center align-items-center fw-bold'>{item.postedBy.at(0).toUpperCase()}</span>
                   <span className='d-flex flex-column'>
@@ -71,7 +71,8 @@ const Home = () => {
                   </span>
                 </div>
                 <hr />
-                <div>{item.post}</div>
+                <div><img src={item.post} alt={item.post} width={"100%"}/></div>
+                <strong>{item.postedBy}</strong><span className="text-muted">   {item.caption}</span>
                 <hr />
                 <div className="d-flex align-items-center gap-3">
 

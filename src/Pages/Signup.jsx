@@ -38,6 +38,11 @@ const Signup = ({ users, setUsers }) => {
                 console.log(values);
 
                 alert("user signed up successfully")
+                setIni({
+                    username: "",
+                    email: "",
+                    password: ""
+                })
                 resetForm()
                 window.location.href = "/login"
             }).catch((err) => {
