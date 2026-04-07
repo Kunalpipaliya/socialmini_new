@@ -35,14 +35,11 @@ const Home = () => {
         console.log(err);
       })
   }
-  useEffect(() => {
-    fetchPost()
-  }, [])
   const [commentsection, setCommentsection] = useState(null)
   const toggleComment = (id) => {
     setCommentsection(commentsection === id ? null : id)
   }
-
+  
   const handleComment = (values) => {
     axios.post("https://generateapi.techsnack.online/api/comments", values, {
       headers: {
@@ -53,16 +50,72 @@ const Home = () => {
     }).catch((err) => {
       console.log(err);
     })
-
   }
+  const [likes, setLikes] = useState([])
+  const fetchLikes = () => {
+    axios.get("https://generateapi.techsnack.online/api/likes", {
+      headers: {
+        Authorization: token
+      }
+    })
+    .then((res) => {
+      setLikes(res.data.Data||[])
+    })
+    .catch((err) => {
+      console.log(err);
+      
+    })
+  }
+  
+  
+  const handleLike = (id) => {
+    const liked = likes.find((l) => l.postid === id && l.likedby === currentUser.email)
+    if (liked) {
+      axios.delete(`https://generateapi.techsnack.online/api/likes/${liked._id}`,{
+        headers:{
+          Authorization:token
+        }
+      })
+      .then(()=>{
+        fetchLikes()
+        
+      })
+      .catch((err)=>{
+        console.log(err);
+        
+      })
+    }
+    else {
+
+      axios.post('https://generateapi.techsnack.online/api/likes', { postid: id, likedby: currentUser.email }, {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then(() => {
+        fetchLikes()
+      })
+      .catch((err) => {
+        console.log(err);
+        
+      })
+    }
+  }
+  
+  useEffect(() => {
+    fetchPost()
+    fetchLikes()
+  },[])
   return (
-    <div>
+    <div className='mb-5 mt-2'>
       {
         posts.map((item, index) => {
           const filteredComments = comments.filter((c) => c.postid === item._id)
+          const liked = likes.find((l) => l.postid === item._id && l.likedby === currentUser.email)
+          const likesCount=likes.filter((l)=>l.postid===item._id)
           return (
-            <div className='container' key={index}>
-              <div className="w-50 m-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3">
+            <div key={index}>
+              <div className="w-md-50  w-100 m-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3">
                 <div className="d-flex gap-2 align-items-center">
                   <span style={{ width: "40px", height: "40px" }} className='bg-dark border border-1 rounded-circle text-white d-flex justify-content-center align-items-center fw-bold'>{item.postedBy.at(0).toUpperCase()}</span>
                   <span className='d-flex flex-column'>
@@ -71,12 +124,15 @@ const Home = () => {
                   </span>
                 </div>
                 <hr />
-                <div><img src={item.post} alt={item.post} width={"100%"}/></div>
+                <div><img src={item.post} alt={item.post} width={"100%"} /></div>
                 <strong>{item.postedBy}</strong><span className="text-muted">   {item.caption}</span>
                 <hr />
                 <div className="d-flex align-items-center gap-3">
+                  <div className="d-flex gap-2 align-items-center">
 
-                  <i className="fa-regular fa-heart"></i>
+                  <i className={liked?"fa-solid fa-heart text-danger":"fa-regular fa-heart"} onClick={() => handleLike(item._id)}></i>
+                  <span>{likesCount.length}</span>
+                  </div>
                   <div className="d-flex align-items-center gap-2">
 
                     <i className="fa-regular fa-comment" onClick={() => toggleComment(item._id)} ></i><span>{filteredComments.length}</span>
