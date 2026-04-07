@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 const Home = () => {
   const token = "w3KH694RqiZ64T9M"
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"))||"Guest"
   const [posts, setposts] = useState([])
   const now = new Date()
   const today = now.getDate() + "-" + (now.getMonth() + 1) + "-" + now.getFullYear()
