@@ -33,7 +33,7 @@ const Login = ({ users, setUsers }) => {
     }
     return (
         <div className='d-flex justify-content-center align-items-center' style={{ height: "100vh" }}>
-            <form action="" className="w-50 p-3 rounded shadow-lg">
+            <form action="" className="w-100 container p-3 rounded shadow-lg">
                 <div className="form-group mb-3">
                     <label htmlFor="" className="form-label">Email</label>
                     <input type="email" value={email} className="form-control" onChange={(e) => setEmail(e.target.value)} placeholder='Enter Email' />
