@@ -8,6 +8,7 @@ import Profile from './Pages/Profile';
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
 import { useState } from 'react';
+import Notification from './Pages/Notification';
 function App() {
   const [users, setUsers] = useState([])
 
@@ -20,6 +21,11 @@ function App() {
           </Route>
           <Route path="/login">
             <Login users={users} setUsers={setUsers}/>
+          </Route>
+          <Route path="/notification">
+            <Header />
+            <Notification/>
+            <Navbar />
           </Route>
           <Route path="/profile">
             <Header />

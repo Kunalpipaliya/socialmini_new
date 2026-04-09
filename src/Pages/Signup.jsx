@@ -52,12 +52,12 @@ const Signup = ({ users, setUsers }) => {
         }
     }
     return (
-        <div className='d-flex justify-content-center align-items-center' style={{ height: "100vh" }}>
+        <div className='d-flex justify-content-center align-items-center container' style={{ height: "100vh" }}>
             <Formik
                 initialValues={ini}
                 onSubmit={handleSubmit}
             >
-                <Form className='w-50 m-auto p-3 shadow-lg rounded'>
+                <Form className='w-100 m-auto p-3 shadow-lg rounded'>
                     <div className="form-group mb-3">
                         <label htmlFor="" className="form-label">Username</label>
                         <Field name="username" placeholder="Enter Username" className="form-control"></Field>
