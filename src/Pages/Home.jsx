@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const token = "w3KH694RqiZ64T9M";
-  const currentUser =
-    JSON.parse(localStorage.getItem("currentUser")) || "Guest";
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || "Guest";
   const [posts, setposts] = useState([]);
   const now = new Date();
   const today =
@@ -64,14 +63,15 @@ const Home = () => {
     }
   };
   const [likes, setLikes] = useState([]);
-  const fetchLikes = () => {
+  const fetchLikes = (item) => {
     axios
-      .get("https://generateapi.techsnack.online/api/like", {
+      .get("https://generateapi.techsnack.online/api/likes", {
         headers: {
           Authorization: token,
         },
       })
       .then((res) => {
+        console.log(res.data.Data)
         setLikes(res.data.Data || []);
       })
       .catch((err) => {
@@ -79,18 +79,16 @@ const Home = () => {
       });
   };
 
-  const handleLike = (item) => {
-    console.log(item);
+  const handleLike = (id) => {
     const liked = likes.find(
       (l) =>
-        l.postid === item._id &&
-        l.likedby === currentUser.email &&
-        l.likedTo === item.postedBy,
+        l.postid === id &&
+        l.likedby === currentUser.email
     );
 
     if (liked) {
       axios
-        .delete(`https://generateapi.techsnack.online/api/like/${liked._id}`, {
+        .delete(`https://generateapi.techsnack.online/api/likes/${liked._id}`, {
           headers: {
             Authorization: token,
           },
@@ -108,11 +106,10 @@ const Home = () => {
       }
       else {
         axios
-          .post("https://generateapi.techsnack.online/api/like",
+          .post("https://generateapi.techsnack.online/api/likes",
             {
-              postid: item._id,
-              likedby: currentUser.email,
-              likedTo: item.postedBy
+              postid: id,
+              likedby: currentUser.email
             },
             {
               headers: {
@@ -141,8 +138,7 @@ const Home = () => {
         const liked = likes.find(
           (l) =>
             l.postid === item._id &&
-            l.likedby === currentUser.email &&
-            l.likedTo === item.postedBy,
+            l.likedby === currentUser.email 
         );
         const likesCount = likes.filter((l) => l.postid === item._id);
         return (
@@ -174,7 +170,7 @@ const Home = () => {
                         ? "fa-solid fa-heart text-danger"
                         : "fa-regular fa-heart"
                     }
-                    onClick={() => handleLike(item)}
+                    onClick={() => handleLike(item._id)}
                   ></i>
                   <span>{likesCount.length}</span>
                 </div>

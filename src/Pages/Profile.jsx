@@ -34,7 +34,7 @@ const Profile = () => {
       })
       .then(() => {
         setActiveEllipsis(false);
-        fetchPost()
+        fetchPost();
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +52,7 @@ const Profile = () => {
   const [likes, setLikes] = useState([]);
   const fetchLikes = () => {
     axios
-      .get("https://generateapi.techsnack.online/api/like", {
+      .get("https://generateapi.techsnack.online/api/likes", {
         headers: {
           Authorization: token,
         },
@@ -71,7 +71,7 @@ const Profile = () => {
     );
     if (liked) {
       axios
-        .delete(`https://generateapi.techsnack.online/api/like/${liked._id}`, {
+        .delete(`https://generateapi.techsnack.online/api/likes/${liked._id}`, {
           headers: {
             Authorization: token,
           },
@@ -85,7 +85,7 @@ const Profile = () => {
     } else {
       axios
         .post(
-          "https://generateapi.techsnack.online/api/like",
+          "https://generateapi.techsnack.online/api/likes",
           { postid: id, likedby: currentUser.email },
           {
             headers: {
@@ -232,7 +232,7 @@ const Profile = () => {
                     <div
                       className=" col-12 col-md-8 col-lg-6 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3"
                       style={
-                        activeEllipsis===item._id
+                        activeEllipsis === item._id
                           ? {
                               filter: "contrast(100%) ",
                               opacity: "0.5",
@@ -341,10 +341,10 @@ const Profile = () => {
                         ""
                       )}
                     </div>
-                    {activeEllipsis===item._id ? (
+                    {activeEllipsis === item._id ? (
                       <div
                         className="position-fixed bg-white p-3 shadow-lg w-100 h-25 rounded-5"
-                        style={{ bottom: "15px",zIndex:"1" }}
+                        style={{ bottom: "15px", zIndex: "1" }}
                       >
                         <div className="d-flex justify-content-between ">
                           <span style={{ width: "20px" }}></span>
