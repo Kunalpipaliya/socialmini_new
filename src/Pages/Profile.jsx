@@ -34,6 +34,7 @@ const Profile = () => {
       })
       .then(() => {
         setActiveEllipsis(false);
+        fetchPost()
       })
       .catch((err) => {
         console.log(err);
@@ -42,19 +43,16 @@ const Profile = () => {
 
   useEffect(() => {
     fetchPost();
-  }, [posts]);
-  const [activeEllipsis, setActiveEllipsis] = useState(false);
+  }, []);
+  const [activeEllipsis, setActiveEllipsis] = useState(null);
   const toggleEllipsis = (id) => {
-    const activeId = posts.find((p) => p._id === id);
-    if (activeId) {
-      setActiveEllipsis(true);
-    } else setActiveEllipsis(false);
+    setActiveEllipsis(activeEllipsis === id ? null : id);
   };
 
   const [likes, setLikes] = useState([]);
   const fetchLikes = () => {
     axios
-      .get("https://generateapi.techsnack.online/api/likes", {
+      .get("https://generateapi.techsnack.online/api/like", {
         headers: {
           Authorization: token,
         },
@@ -73,7 +71,7 @@ const Profile = () => {
     );
     if (liked) {
       axios
-        .delete(`https://generateapi.techsnack.online/api/likes/${liked._id}`, {
+        .delete(`https://generateapi.techsnack.online/api/like/${liked._id}`, {
           headers: {
             Authorization: token,
           },
@@ -87,7 +85,7 @@ const Profile = () => {
     } else {
       axios
         .post(
-          "https://generateapi.techsnack.online/api/likes",
+          "https://generateapi.techsnack.online/api/like",
           { postid: id, likedby: currentUser.email },
           {
             headers: {
@@ -141,22 +139,28 @@ const Profile = () => {
   const [openMenu, setOpenmenu] = useState(false);
 
   const handleMenu = () => {
-    setActiveEllipsis(false)
+    setActiveEllipsis(false);
     setOpenmenu(openMenu === true ? false : true);
   };
   useEffect(() => {
     fetchLikes();
     fetchComment();
   }, []);
-   const handleLogout=()=>{
-        localStorage.removeItem("currentUser")
-        window.location.href="/login"
-    }   
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    window.location.href = "/login";
+  };
 
   return (
     <div>
       <div>
-        <div className={openMenu?"container d-flex justify-content-between bg-light":"container d-flex justify-content-between bg-white"}>
+        <div
+          className={
+            openMenu
+              ? "container d-flex justify-content-between bg-light"
+              : "container d-flex justify-content-between bg-white"
+          }
+        >
           <div className="d-flex gap-2 align-items-start my-4">
             <span
               style={{ width: "40px", height: "40px" }}
@@ -201,7 +205,10 @@ const Profile = () => {
               ></span>
             </div>
             <hr className="text-dark" />
-            <div className="d-flex align-items-center text-danger gap-2 " onClick={handleLogout}>
+            <div
+              className="d-flex align-items-center text-danger gap-2 "
+              onClick={handleLogout}
+            >
               <i className="fa-solid fa-arrow-right-from-bracket"></i>
               <span>Logout</span>
             </div>
@@ -223,9 +230,9 @@ const Profile = () => {
                 return (
                   <div key={index}>
                     <div
-                      className=" w-md-50 m-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3"
+                      className=" col-12 col-md-8 col-lg-6 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3"
                       style={
-                        activeEllipsis
+                        activeEllipsis===item._id
                           ? {
                               filter: "contrast(100%) ",
                               opacity: "0.5",
@@ -334,10 +341,10 @@ const Profile = () => {
                         ""
                       )}
                     </div>
-                    {activeEllipsis ? (
+                    {activeEllipsis===item._id ? (
                       <div
                         className="position-fixed bg-white p-3 shadow-lg w-100 h-25 rounded-5"
-                        style={{ bottom: "15px" }}
+                        style={{ bottom: "15px",zIndex:"1" }}
                       >
                         <div className="d-flex justify-content-between ">
                           <span style={{ width: "20px" }}></span>

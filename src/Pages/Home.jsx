@@ -14,7 +14,7 @@ const Home = () => {
   const [comments, setComments] = useState([]);
   const fetchPost = () => {
     axios
-      .get(" https://generateapi.techsnack.online/api/postImg", {
+      .get("https://generateapi.techsnack.online/api/postImg", {
         headers: {
           Authorization: token,
         },
@@ -46,8 +46,8 @@ const Home = () => {
 
   const handleComment = (values) => {
     if (currentUser === "Guest") {
-      alert("You can't Comment a post without Login!")
-      window.location.href="/login"
+      alert("You can't Comment a post without Login!");
+      window.location.href = "/login";
     } else {
       axios
         .post("https://generateapi.techsnack.online/api/comments", values, {
@@ -66,7 +66,7 @@ const Home = () => {
   const [likes, setLikes] = useState([]);
   const fetchLikes = () => {
     axios
-      .get("https://generateapi.techsnack.online/api/likes", {
+      .get("https://generateapi.techsnack.online/api/like", {
         headers: {
           Authorization: token,
         },
@@ -79,13 +79,18 @@ const Home = () => {
       });
   };
 
-  const handleLike = (id) => {
+  const handleLike = (item) => {
+    console.log(item);
     const liked = likes.find(
-      (l) => l.postid === id && l.likedby === currentUser.email,
+      (l) =>
+        l.postid === item._id &&
+        l.likedby === currentUser.email &&
+        l.likedTo === item.postedBy,
     );
+
     if (liked) {
       axios
-        .delete(`https://generateapi.techsnack.online/api/likes/${liked._id}`, {
+        .delete(`https://generateapi.techsnack.online/api/like/${liked._id}`, {
           headers: {
             Authorization: token,
           },
@@ -100,16 +105,20 @@ const Home = () => {
       if (currentUser === "Guest") {
         alert("without login you can't like a post");
         window.location.href = "/login";
-      } else {
+      }
+      else {
         axios
-          .post(
-            "https://generateapi.techsnack.online/api/likes",
-            { postid: id, likedby: currentUser.email },
+          .post("https://generateapi.techsnack.online/api/like",
+            {
+              postid: item._id,
+              likedby: currentUser.email,
+              likedTo: item.postedBy
+            },
             {
               headers: {
-                Authorization: token,
-              },
-            },
+                Authorization: token
+              }
+            }
           )
           .then(() => {
             fetchLikes();
@@ -124,18 +133,21 @@ const Home = () => {
   useEffect(() => {
     fetchPost();
     fetchLikes();
-  }, []);
+  },[]);
   return (
     <div className="mb-5 mt-2">
       {posts.map((item, index) => {
         const filteredComments = comments.filter((c) => c.postid === item._id);
         const liked = likes.find(
-          (l) => l.postid === item._id && l.likedby === currentUser.email,
+          (l) =>
+            l.postid === item._id &&
+            l.likedby === currentUser.email &&
+            l.likedTo === item.postedBy,
         );
         const likesCount = likes.filter((l) => l.postid === item._id);
         return (
           <div key={index}>
-            <div className="w-md-50  w-100 m-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3">
+            <div className="col-12 col-md-8 col-lg-5 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3">
               <div className="d-flex gap-2 align-items-center">
                 <span
                   style={{ width: "40px", height: "40px" }}
@@ -162,7 +174,7 @@ const Home = () => {
                         ? "fa-solid fa-heart text-danger"
                         : "fa-regular fa-heart"
                     }
-                    onClick={() => handleLike(item._id)}
+                    onClick={() => handleLike(item)}
                   ></i>
                   <span>{likesCount.length}</span>
                 </div>
@@ -176,7 +188,7 @@ const Home = () => {
               </div>
               <div className="my-2">
                 {commentsection === item._id &&
-                  filteredComments.map((item, index) => {
+                  filteredComments.map((comment, i) => {
                     return (
                       <div key={index}>
                         <div className="p-2 my-2 bg-light rounded shadow-sm border border-1">
@@ -185,11 +197,11 @@ const Home = () => {
                               style={{ width: "30px", height: "30px" }}
                               className="bg-secondary rounded-circle text-white d-flex justify-content-center align-items-center  "
                             >
-                              {item.author.at(0).toUpperCase()}
+                              {comment.author.at(0).toUpperCase()}
                             </span>
                             <div className="d-flex flex-column">
-                              <small className="pt-1">{item.author}</small>
-                              <span>{item.text}</span>
+                              <small className="pt-1">{comment.author}</small>
+                              <span>{comment.text}</span>
                             </div>
                           </div>
                         </div>
