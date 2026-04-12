@@ -18,7 +18,8 @@ const Profile = () => {
         },
       })
       .then((res) => {
-        setposts(res.data.Data);
+        const reversePost = [...res.data.Data].reverse()
+        setposts(reversePost);
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +53,7 @@ const Profile = () => {
   const [likes, setLikes] = useState([]);
   const fetchLikes = () => {
     axios
-      .get("https://generateapi.techsnack.online/api/likes", {
+      .get("https://generateapi.techsnack.online/api/like", {
         headers: {
           Authorization: token,
         },
@@ -65,13 +66,15 @@ const Profile = () => {
       });
   };
 
-  const handleLike = (id) => {
+  const handleLike = (item) => {
+
+    console.log(item);
     const liked = likes.find(
-      (l) => l.postid === id && l.likedby === currentUser.email,
+      (l) => l.postid._id === item._id && l.likedby === currentUser.email,
     );
     if (liked) {
       axios
-        .delete(`https://generateapi.techsnack.online/api/likes/${liked._id}`, {
+        .delete(`https://generateapi.techsnack.online/api/like/${liked._id}`, {
           headers: {
             Authorization: token,
           },
@@ -83,10 +86,14 @@ const Profile = () => {
           console.log(err);
         });
     } else {
+
+
       axios
         .post(
-          "https://generateapi.techsnack.online/api/likes",
-          { postid: id, likedby: currentUser.email },
+          "https://generateapi.techsnack.online/api/like",
+          {
+            postid: item._id, likedby: currentUser.email, likedTo: item._id
+          },
           {
             headers: {
               Authorization: token,
@@ -224,19 +231,19 @@ const Profile = () => {
                 );
                 const liked = likes.find(
                   (l) =>
-                    l.postid === item._id && l.likedby === currentUser.email,
+                    l.postid._id === item._id && l.likedby === currentUser.email
                 );
-                const likesCount = likes.filter((l) => l.postid === item._id);
+                const likesCount = likes.filter((l) => l.postid._id === item._id);
                 return (
-                  <div key={index}>
+                  <div key={item._id}>
                     <div
                       className=" col-12 col-md-8 col-lg-6 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3"
                       style={
                         activeEllipsis === item._id
                           ? {
-                              filter: "contrast(100%) ",
-                              opacity: "0.5",
-                            }
+                            filter: "contrast(100%)",
+                            opacity: "0.5",
+                          }
                           : { filter: "blur(0px)", opacity: "1" }
                       }
                     >
@@ -260,8 +267,22 @@ const Profile = () => {
                         ></i>
                       </div>
                       <hr />
-                      <div>
-                        <img src={item.post} alt={item.post} width={"100%"} />
+                      <div style={{
+                        width: "100%",
+                        aspectRatio: "1 / 1",
+                        overflow: "hidden",
+                        borderRadius: "12px",
+                        backgroundColor: "#000", // Dark background looks better for cinematic crops
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}>
+                        <img src={item.post} alt={item.post} width={"100%"} style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          objectPosition: "top center"
+                        }} />
                       </div>
                       <strong>{item.postedBy}</strong>
                       <span className="text-muted"> {item.caption}</span>
@@ -274,7 +295,7 @@ const Profile = () => {
                                 ? "fa-solid fa-heart text-danger"
                                 : "fa-regular fa-heart"
                             }
-                            onClick={() => handleLike(item._id)}
+                            onClick={() => handleLike(item)}
                           ></i>
                           <span>{likesCount.length}</span>
                         </div>
