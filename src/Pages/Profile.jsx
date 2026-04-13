@@ -237,7 +237,7 @@ const Profile = () => {
                 return (
                   <div key={item._id}>
                     <div
-                      className=" col-12 col-md-8 col-lg-6 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3"
+                      className=" col-12 col-md-8 col-lg-5 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3"
                       style={
                         activeEllipsis === item._id
                           ? {

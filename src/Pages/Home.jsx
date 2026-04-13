@@ -45,10 +45,12 @@ const Home = () => {
   };
 
   const handleComment = (values) => {
+    if (values.text==='') return
     if (currentUser === "Guest") {
       alert("You can't Comment a post without Login!");
       window.location.href = "/login";
     } else {
+
       axios
         .post("https://generateapi.techsnack.online/api/comments", values, {
           headers: {
@@ -144,7 +146,7 @@ const Home = () => {
         );
         const likesCount = likes.filter((l) => l.postid._id === item._id);
         return (
-          <div key={index}>
+          <div key={item._id}>
             <div className="col-12 col-md-8 col-lg-5 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3">
               <div className="d-flex gap-2 align-items-center">
                 <span
