@@ -9,6 +9,7 @@ import Signup from './Pages/Signup';
 import Login from './Pages/Login';
 import { useState } from 'react';
 import Notification from './Pages/Notification';
+import Search from './Pages/Search';
 function App() {
   const [users, setUsers] = useState([])
 
@@ -27,8 +28,11 @@ function App() {
             <Notification/>
             <Navbar />
           </Route>
+          <Route path="/search">
+            <Search/> 
+            <Navbar />
+          </Route>
           <Route path="/profile">
-            <Header />
             <Profile />
             <Navbar />
           </Route>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
+import { Link } from "@mui/material";
 
 const Profile = () => {
   const token = "w3KH694RqiZ64T9M";
@@ -160,41 +161,51 @@ const Profile = () => {
 
   return (
     <div>
-      <div>
-        <div
-          className={
-            openMenu
-              ? "container d-flex justify-content-between bg-light"
-              : "container d-flex justify-content-between bg-white"
-          }
-        >
-          <div className="d-flex gap-2 align-items-start my-4">
-            <span
-              style={{ width: "40px", height: "40px" }}
-              className="bg-dark rounded-circle text-white d-flex justify-content-center align-items-center fw-bold"
-            >
-              {currentUser.email.at(0).toUpperCase()}
-            </span>
-            <span className="d-flex flex-column">
-              <span>{currentUser.username}</span>
-              <small className="text-muted">{currentUser.email}</small>
-              <div className="d-flex gap-3 align-items-center">
-                <div className="d-flex flex-column">
-                  <strong>Posts</strong>
-                  <p className="text-center">{filteredPosts.length}</p>
-                </div>
-                <div className="d-flex flex-column">
-                  <strong>Followers</strong>
-                  <p className="text-center">0</p>
-                </div>
-                <div className="d-flex flex-column">
-                  <strong>Following</strong>
-                  <p className="text-center">0</p>
-                </div>
-              </div>
-            </span>
+      <div className='p-3  bg-white border border-top-0 border-end-0 border-start-0 border-bottom-2 '>
+        <div className="d-flex justify-content-between aling-items-center ">
+          <strong>{currentUser.email}</strong>
+          <div className="d-flex align-items-center gap-5">
+            <Link href="/post" className="text-decoration-none text-dark"><i className="fa-solid fa-plus"></i></Link>
+
+            <i className="fa-solid fa-bars" onClick={handleMenu}></i>
           </div>
-          <i className="fa-solid fa-bars mt-4" onClick={handleMenu}></i>
+
+        </div>
+      </div>
+      <div>
+        <div className="container mt-4 mb-4">
+          <div className="d-flex justify-content-around align-items-center">
+
+            {/* Left Side: Avatar & Username Grouped Together */}
+            <div className="d-flex flex-column align-items-center">
+              <span
+                style={{ width: "70px", height: "70px", fontSize: "1.5rem" }}
+                className="bg-dark rounded-circle text-white d-flex justify-content-center align-items-center fw-bold"
+              >
+                {currentUser.email.at(0).toUpperCase()}
+              </span>
+              {/* mt-2 adds just a tiny gap between the circle and the name */}
+              <strong className="mt-2">{currentUser.username}</strong>
+            </div>
+
+            {/* Right Side: Stats Grouped Together */}
+            <div className="d-flex gap-4 text-center">
+              <div className="d-flex flex-column">
+                {/* Changed <p> to <span> to remove the annoying bottom margin */}
+                <span className="fs-5 fw-bold">{filteredPosts.length}</span>
+                <span>Posts</span>
+              </div>
+              <div className="d-flex flex-column">
+                <span className="fs-5 fw-bold">0</span>
+                <span>Followers</span>
+              </div>
+              <div className="d-flex flex-column">
+                <span className="fs-5 fw-bold">0</span>
+                <span>Following</span>
+              </div>
+            </div>
+
+          </div>
         </div>
         {openMenu ? (
           <div
