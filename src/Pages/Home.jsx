@@ -33,7 +33,7 @@ const Home = () => {
       })
       .then((res) => {
         setComments(res.data.Data || []);
-        console.log(res.data.Data);
+      
       })
       .catch((err) => {
         console.log(err);
@@ -74,7 +74,7 @@ const Home = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.Data)
+        
         setLikes(res.data.Data || []);
       })
       .catch((err) => {

@@ -120,7 +120,7 @@ const Profile = () => {
       })
       .then((res) => {
         setComments(res.data.Data || []);
-        console.log(res.data.Data);
+      
       })
       .catch((err) => {
         console.log(err);
