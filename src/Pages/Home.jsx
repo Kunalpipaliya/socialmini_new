@@ -135,6 +135,13 @@ const Home = () => {
     fetchPost();
     fetchLikes();
   }, []);
+  const redirectPostowner=(userEmail)=>{
+    userEmail===currentUser.email?
+    window.location.href="/profile"
+    :
+    window.location.href = `/user/${userEmail}`
+    
+  }
   return (
     <div className="mb-5 mt-2">
       {posts.map((item, index) => {
@@ -148,7 +155,7 @@ const Home = () => {
         return (
           <div key={item._id}>
             <div className="col-12 col-md-8 col-lg-5 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3">
-              <div className="d-flex gap-2 align-items-center">
+              <div className="d-flex gap-2 align-items-center" onClick={()=>redirectPostowner(item.postedBy)} style={{cursor:"pointer"}}>
                 <span
                   style={{ width: "40px", height: "40px" }}
                   className="bg-dark border border-1 rounded-circle text-white d-flex justify-content-center align-items-center fw-bold"

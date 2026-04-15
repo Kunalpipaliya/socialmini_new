@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Notification from './Pages/Notification';
 import Search from './Pages/Search';
 import Userprofile from './Pages/Userprofile';
+import Chat from './Pages/Chat';
 function App() {
   const [users, setUsers] = useState([])
 
@@ -35,6 +36,10 @@ function App() {
           <Route path="/search">
             <Search/> 
             <Navbar/>
+          </Route>
+          <Route path="/chat">
+            <Chat />
+            <Navbar />
           </Route>
           <Route path="/profile">
             <Profile />
