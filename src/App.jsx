@@ -12,6 +12,7 @@ import Notification from './Pages/Notification';
 import Search from './Pages/Search';
 import Userprofile from './Pages/Userprofile';
 import Chat from './Pages/Chat';
+import Messages from './Pages/Messages';
 function App() {
   const [users, setUsers] = useState([])
 
@@ -29,6 +30,9 @@ function App() {
             <Header />
             <Notification/>
             <Navbar />
+          </Route>
+          <Route path="/chat/:userEmail">
+            <Messages/>
           </Route>
           <Route path="/user/:userEmail">
             <Userprofile/> 

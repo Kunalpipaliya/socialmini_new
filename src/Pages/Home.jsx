@@ -167,17 +167,8 @@ const Home = () => {
                 </span>
               </div>
               <hr />
-              <div style={{
-                width: "100%",
-                aspectRatio: "1 / 1",
-                overflow: "hidden",
-                borderRadius: "12px",
-                backgroundColor: "#f8f9fa", // Light gray background for empty space
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-                <img src={item.post} alt={item.post} width={"100%"} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+              <div >
+                <img src={item.post} alt={item.post} width={"100%"}  />
               </div>
               <strong>{item.postedBy}</strong>
               <span className="text-muted"> {item.caption}</span>

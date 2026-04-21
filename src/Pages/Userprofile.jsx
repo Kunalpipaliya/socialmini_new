@@ -219,22 +219,8 @@ const Userprofile = () => {
                       
                     </div>
                     <hr />
-                    <div style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      overflow: "hidden",
-                      borderRadius: "12px",
-                      backgroundColor: "#000", // Dark background looks better for cinematic crops
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}>
-                      <img src={item.post} alt={item.post} width={"100%"} style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        objectPosition: "top center"
-                      }} />
+                    <div>
+                      <img src={item.post} alt={item.post} width={"100%"}    />
                     </div>
                     <strong>{item.postedBy}</strong>
                     <span className="text-muted"> {item.caption}</span>
