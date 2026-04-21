@@ -38,7 +38,7 @@ const Chat = () => {
         </div>
       </div>
       <div className="container">
-        <h1 className="fw-bold">Chat</h1>
+        <h1 className="fw-bold">Messages</h1>
         {
         user.map((user) => {
               return (
