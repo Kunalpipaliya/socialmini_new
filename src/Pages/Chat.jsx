@@ -30,13 +30,16 @@ const Chat = () => {
   return (
     <div>
       <div className="p-3  bg-white border border-top-0 border-end-0 border-start-0 border-bottom-2 ">
-        <div className="d-flex gap-2 align-items-center ">
-          <Link href="/">
-            <i className="fa-solid fa-arrow-left text-dark"></i>
-          </Link>
-          <strong>{currentUser.email}</strong>
-        </div>
-      </div>
+              <div className="d-flex gap-2 align-items-center ">
+                <Link href="/chat">
+                  <i className="fa-solid fa-arrow-left text-dark"></i>
+                </Link>
+                <div className="d-flex align-items-center gap-2">
+                <strong className="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center" style={{width:"40px",height:"40px"}}>{currentUser.email.at(0).toUpperCase()}</strong>
+                <strong>{currentUser.email}</strong>
+                </div>
+              </div>
+            </div>
       <div className="container">
         <h1 className="fw-bold">Messages</h1>
         {
