@@ -13,11 +13,14 @@ import Search from './Pages/Search';
 import Userprofile from './Pages/Userprofile';
 import Chat from './Pages/Chat';
 import Messages from './Pages/Messages';
+import { ToastContainer } from 'react-toastify';
 function App() {
   const [users, setUsers] = useState([])
 
   return (
     <div className="App">
+      <ToastContainer position="top-center"/>
+
       <BrowserRouter>
         <Switch>
           <Route path="/signup">

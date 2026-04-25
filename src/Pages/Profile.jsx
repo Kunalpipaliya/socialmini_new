@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { Link } from "@mui/material";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const token = "w3KH694RqiZ64T9M";
@@ -37,6 +38,7 @@ const Profile = () => {
       .then(() => {
         setActiveEllipsis(false);
         fetchPost();
+        toast.success("Post Deleted")
       })
       .catch((err) => {
         console.log(err);

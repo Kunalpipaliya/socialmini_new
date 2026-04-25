@@ -2,6 +2,7 @@ import { Link } from "@mui/material";
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const Signup = ({ users, setUsers }) => {
   const token = "w3KH694RqiZ64T9M";
@@ -26,7 +27,7 @@ const Signup = ({ users, setUsers }) => {
   const handleSubmit = (values, { resetForm }) => {
     const existUser = users.find((u) => u.email === values.email);
     if (existUser) {
-      alert("user already exist");
+      toast.error("user already exist",{position: "top-center"});
     } else {
       axios
         .post("https://generateapi.techsnack.online/api/users", values, {
@@ -37,7 +38,7 @@ const Signup = ({ users, setUsers }) => {
         .then(() => {
           console.log(values);
 
-          alert("user signed up successfully");
+          toast.success("user signed up successfully",{position: "top-center"});
           setIni({
             username: "",
             email: "",

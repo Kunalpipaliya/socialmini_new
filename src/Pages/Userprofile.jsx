@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom/cjs/react-router-dom';
-import { Form,Field,Formik } from 'formik';
+import { Form, Field, Formik } from 'formik';
 import { Link } from '@mui/material';
 const Userprofile = () => {
   const token = "w3KH694RqiZ64T9M"
@@ -94,7 +94,7 @@ const Userprofile = () => {
       })
       .then((res) => {
         setComments(res.data.Data || []);
-      
+
       })
       .catch((err) => {
         console.log(err);
@@ -118,37 +118,38 @@ const Userprofile = () => {
         console.log(err);
       });
   };
-  const [profileUser,setProfileUser]=useState(null)
+  const [profileUser, setProfileUser] = useState(null)
   useEffect(() => {
     fetchpost();
     fetchComment()
     fetchLikes()
-    axios.get("https://generateapi.techsnack.online/api/users",{
-      headers:{
-        Authorization:token
+    axios.get("https://generateapi.techsnack.online/api/users", {
+      headers: {
+        Authorization: token
       }
     })
-    .then((res)=>{
-      const allusers=res.data.Data||[]
-      const foundUser=allusers.find((u)=>u.email===userEmail)
-      setProfileUser(foundUser)
-    })
-    .catch((err)=>{
-      console.log(err);
-      
-    })
+      .then((res) => {
+        const allusers = res.data.Data || []
+        const foundUser = allusers.find((u) => u.email === userEmail)
+        setProfileUser(foundUser)
+      })
+      .catch((err) => {
+        console.log(err);
+
+      })
   }, [userEmail]);
 
   const filteredPosts = posts.filter((p) => p.postedBy === userEmail)
 
   return (
     <div>
+      
       <div className='p-3  bg-white border border-top-0 border-end-0 border-start-0 border-bottom-2 '>
         <div className="d-flex gap-3 aling-items-center ">
-                  <Link href="/search"><i className="fa-solid fa-arrow-left text-dark"></i></Link>
+          <Link href="/search"><i className="fa-solid fa-arrow-left text-dark"></i></Link>
 
           <strong>{userEmail}</strong>
-          
+
         </div>
       </div>
       <div>
@@ -156,36 +157,45 @@ const Userprofile = () => {
           <div className="d-flex justify-content-around align-items-center">
 
             <div className="d-flex flex-column align-items-center">
+
               <span
                 style={{ width: "70px", height: "70px", fontSize: "1.5rem" }}
                 className="bg-dark rounded-circle text-white d-flex justify-content-center align-items-center fw-bold"
               >
                 {userEmail.at(0).toUpperCase()}
               </span>
-              <strong className="mt-2">{profileUser?profileUser.username:userEmail.split('@')[0]}</strong>
+              <strong className="mt-2">{profileUser ? profileUser.username : userEmail.split('@')[0]}</strong>
             </div>
+            <div className="d-flex flex-column gap-2">
 
-            <div className="d-flex gap-4 text-center">
-              <div className="d-flex flex-column">
-                <span className="fs-5 fw-bold">{filteredPosts.length}</span>
-                <span>Posts</span>
+              <div className="d-flex gap-4 text-center">
+                <div className="d-flex flex-column">
+                  <span className="fs-5 fw-bold">{filteredPosts.length}</span>
+                  <span>Posts</span>
+                </div>
+                <div className="d-flex flex-column">
+                  <span className="fs-5 fw-bold">0</span>
+                  <span>Followers</span>
+                </div>
+                <div className="d-flex flex-column">
+                  <span className="fs-5 fw-bold">0</span>
+                  <span>Following</span>
+                </div>
+
               </div>
-              <div className="d-flex flex-column">
-                <span className="fs-5 fw-bold">0</span>
-                <span>Followers</span>
-              </div>
-              <div className="d-flex flex-column">
-                <span className="fs-5 fw-bold">0</span>
-                <span>Following</span>
+              <div className="d-flex gap-2">
+
+            <button className="btn btn-primary w-50">Follow</button>
+            <button className="btn btn-primary w-50" onClick={() => window.location.href = `/chat/${userEmail}`}>Message</button>
               </div>
             </div>
 
           </div>
         </div>
-        
+
         <div className="mb-5">
           {filteredPosts.length === 0 ? (
-            <h3 className="text-center">0 post by {profileUser?profileUser.username:userEmail.split('@')[0]}</h3>
+            <h3 className="text-center">0 post by {profileUser ? profileUser.username : userEmail.split('@')[0]}</h3>
           ) : (
             filteredPosts.map((item, index) => {
               const filteredComments = comments.filter(
@@ -200,7 +210,7 @@ const Userprofile = () => {
                 <div key={item._id}>
                   <div
                     className=" col-12 col-md-8 col-lg-5 mx-auto shadow-sm rounded-4 bg-white p-3 border border-1 my-3"
-                    
+
                   >
                     <div className="d-flex justify-content-between align-items-center">
                       <div className="d-flex gap-2 align-items-center">
@@ -216,11 +226,11 @@ const Userprofile = () => {
                           </small>
                         </span>
                       </div>
-                      
+
                     </div>
                     <hr />
                     <div>
-                      <img src={item.post} alt={item.post} width={"100%"}    />
+                      <img src={item.post} alt={item.post} width={"100%"} />
                     </div>
                     <strong>{item.postedBy}</strong>
                     <span className="text-muted"> {item.caption}</span>
@@ -300,13 +310,13 @@ const Userprofile = () => {
                       ""
                     )}
                   </div>
-                  
+
                 </div>
               );
             })
           )}
         </div>
-      
+
       </div>
     </div>
 

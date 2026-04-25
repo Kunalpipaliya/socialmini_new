@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { Link } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
+import { toast } from "react-toastify";
 const Messages = () => {
   const token = "w3KH694RqiZ64T9M";
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -50,7 +51,8 @@ const Messages = () => {
         },
       })
       .then(() => {
-        console.log("Message sent successfully");
+        toast.success("Message sent ");
+        fetchMessages()
         resetForm(); // Clears the input field for the next message
       })
       .catch((err) => {
@@ -68,7 +70,7 @@ const Messages = () => {
   );
   return (
     <div className="bg-light" style={{ height: "100vh" }}>
-      <div className="p-3  bg-white border border-top-0 border-end-0 border-start-0 border-bottom-2 ">
+      <div className="p-3  bg-white border border-top-0 border-end-0 border-start-0 border-bottom-2 " style={{position:"fixed",top:"0",left:"0",right:"0"}}>
         <div className="d-flex gap-2 align-items-center ">
           <Link href="/chat">
             <i className="fa-solid fa-arrow-left text-dark"></i>
@@ -84,8 +86,7 @@ const Messages = () => {
           </div>
         </div>
       </div>
-      <div className="container d-flex flex-column gap-2 mt-3 pb-5">
-        {" "}
+      <div className="container d-flex flex-column gap-2  pb-5" style={{paddingTop:"120px"}}>
         {/* pb-5 to prevent keyboard overlap */}
         {filteredMessages.map((item, index) => {
           const isCurrentUser = item.sender === currentUser.email;
@@ -95,8 +96,8 @@ const Messages = () => {
               key={item._id}
               className={`d-flex flex-column p-2 rounded shadow-sm ${
                 isCurrentUser
-                  ? "bg-info text-white align-self-end" // Your messages: Blue and Right
-                  : "bg-white text-dark align-self-start" // Their messages: White and Left
+                  ? " text-white align-self-end" // Your messages: Blue and Right
+                  : " text-dark align-self-start" // Their messages: White and Left
               }`}
               style={{
                 maxWidth: "75%",
@@ -104,6 +105,8 @@ const Messages = () => {
                 borderRadius: isCurrentUser
                   ? "15px 15px 0px 15px"
                   : "15px 15px 15px 0px",
+                background:isCurrentUser?
+                "hotpink":"white"
               }}
             >
               <span className="mb-1">{item.message}</span>

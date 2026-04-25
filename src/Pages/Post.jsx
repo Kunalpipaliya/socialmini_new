@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Post = () => {
   const token = "w3KH694RqiZ64T9M";
@@ -12,7 +13,7 @@ const Post = () => {
     caption: "",
     postedBy: currentUser?.email || "",
   };
-
+  
   const fetchPost = () => {
     axios
       .get("https://generateapi.techsnack.online/api/postImg", {
@@ -20,6 +21,7 @@ const Post = () => {
       })
       .then((res) => {
         setPosts(res.data.Data);
+
       })
       .catch((err) => {
         console.log(err);
@@ -45,9 +47,9 @@ const Post = () => {
       })
       .then(() => {
         resetForm();
+        toast.success("Post published successfully !",{position:"top-center"})
         fetchPost();
         console.log(posts);
-
         window.location.href = "/profile";
       })
       .catch((err) => {

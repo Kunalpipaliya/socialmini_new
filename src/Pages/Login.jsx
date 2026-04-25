@@ -2,6 +2,7 @@ import { Link } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Login = ({ users, setUsers }) => {
   const [email, setEmail] = useState("");
@@ -26,13 +27,14 @@ const Login = ({ users, setUsers }) => {
     );
     localStorage.setItem("currentUser", JSON.stringify(user));
     if (user) {
-      alert("loggin successfully");
+      toast.success(`Welcome back ${user.username} `,{position: "top-center"});
       window.location.href = "/profile";
     } else {
-      alert("try again!");
+      toast.error("try again!",{position: "top-center"});
     }
   };
   return (
+    
     <div
       className="d-flex justify-content-center align-items-center container"
       style={{ height: "100vh" }}
